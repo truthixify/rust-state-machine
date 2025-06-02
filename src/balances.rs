@@ -62,7 +62,7 @@ impl<T: Config> Pallet<T> {
 // and not included as a parameter of the call.
 pub enum Call<T: Config> {
 	Transfer { to: T::AccountId, amount: T::Balance },
-    BurnBalance { account: T::AccountId },
+	BurnBalance { account: T::AccountId },
 }
 
 /// Implementation of the dispatch logic, mapping from `BalancesCall` to the appropriate underlying
@@ -80,13 +80,13 @@ impl<T: Config> crate::support::Dispatch for Pallet<T> {
 			Call::Transfer { to, amount } => {
 				self.transfer(caller, to, amount)?;
 			},
-            Call::BurnBalance { account } => {
-                if caller != account {
-                    return Err("cannot burn another user balance");
-                }
+			Call::BurnBalance { account } => {
+				if caller != account {
+					return Err("cannot burn another user balance");
+				}
 
-                self.set_balance(&account, T::Balance::zero());
-            },
+				self.set_balance(&account, T::Balance::zero());
+			},
 		}
 		Ok(())
 	}
